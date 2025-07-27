@@ -1,0 +1,79 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <title>公務員個資法法律責任測驗</title>
+    <style>
+        body { font-family: sans-serif; max-width: 600px; margin: auto; padding: 20px; line-height: 1.6; }
+        .question { margin-bottom: 20px; }
+        button { margin-top: 10px; }
+        .correct { color: green; }
+        .incorrect { color: red; }
+    </style>
+</head>
+<body>
+    <h1>📜 公務員個資法法律責任測驗</h1>
+    <div id="quiz"></div>
+    <div id="result"></div>
+    <script>
+        const questions = [
+            {
+                q: "1. 根據 GDPR，誰是資料控管者？",
+                a: ["代表他人蒐集、處理或利用資料的人", "決定資料蒐集目的與方法的人", "為資料處理者工作的人", "只儲存資料的人"],
+                c: 1
+            },
+            {
+                q: "2. 員工在合法授權下處理資料的法律地位？",
+                a: ["獨立控管者", "資料處理者", "視為控管者或處理者一部分", "外部第三人"],
+                c: 2
+            },
+            {
+                q: "3. 我國用哪兩詞代替 GDPR 中控管者/處理者？",
+                a: ["公務機關與非公務機關", "委託機關與受託機關", "行政機關與司法機關", "主管機關與執行機關"],
+                c: 1
+            },
+            {
+                q: "4. 公務員未經授權為個人目的處理資料，其法律地位為？",
+                a: ["仍為所屬機關行為", "變成獨立控管者", "資料處理者", "不受規範"],
+                c: 1
+            },
+            {
+                q: "5. 違法公務員的蒐集行為適用哪兩條？",
+                a: ["第15與16條", "第19與20條", "第23與24條", "第31與32條"],
+                c: 1
+            }
+        ];
+        let current = 0, score = 0;
+        function showQuestion() {
+            if (current >= questions.length) {
+                document.getElementById("quiz").innerHTML = "";
+                document.getElementById("result").innerHTML = `<h2>你答對了 ${score} / ${questions.length} 題</h2>`;
+                return;
+            }
+            const q = questions[current];
+            let html = `<div class="question"><strong>${q.q}</strong><br>`;
+            q.a.forEach((opt, i) => {
+                html += `<input type="radio" name="q" value="${i}" id="opt${i}">
+                         <label for="opt${i}">${String.fromCharCode(65+i)}. ${opt}</label><br>`;
+            });
+            html += `<button onclick="checkAnswer()">提交</button></div>`;
+            document.getElementById("quiz").innerHTML = html;
+        }
+        function checkAnswer() {
+            const choice = document.querySelector('input[name="q"]:checked');
+            if (!choice) return;
+            const selected = parseInt(choice.value);
+            if (selected === questions[current].c) {
+                alert("✅ 答對了！");
+                score++;
+            } else {
+                alert("❌ 答錯了！");
+            }
+            current++;
+            showQuestion();
+        }
+        showQuestion();
+    </script>
+</body>
+</html>
